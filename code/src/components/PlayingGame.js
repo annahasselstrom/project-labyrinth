@@ -1,43 +1,44 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { firstFetch, currentstate } from 'reducers/currentstate';
+import { nextFetch, currentstate } from 'reducers/currentstate';
 
-
-// Page showing instructions we got as reponse from the Backend
-// Accessing the object with the instructions and showing them to the user
+// This component is responsible for passing data to the Redux store (and the POST requests) 
+// in order to keep the store updated and have the player moving forward in the game.
+// For this the component needs access to: current gamestatus, actions, and history of the 
+// player.
 export const PlayingGame = () => {
-  const gameStatusGlobal = useSelector((state) => state.currentstate.gameStatus);
   const actions = useSelector((state) => state.currentstate.gameStatus.actions);
+  const gameStatusGlobal = useSelector((state) => state.currentstate.gameStatus);
   const historyArrray = useSelector((state) => state.currentstate.history);
 
   const dispatch = useDispatch();
 
+  // The function onHistoryBack dispatches to the reducer, the payload action of historyGoBack, triggered by
+  // the onclick below. The historyGoBack action is then handled by the reducer historyGoBack.
   const onHistoryBack = () => {
     dispatch(currentstate.actions.historyGoBack());
   };
 
+  // The component is also responsible for mapping over and outputting different properties
+  // from the Api object, and by sending another nextFetch on every onclick by player. The onclick 
+  // stores the value of the direction chosen by the player, for the Api to know what next 
+  // instructions to pass back in the response.
+  // The Go back-button calls the onHistoryBack function that dispatches the historyGoBack action, handled
+  // by the reducer with the same name. The button is disabled until a first move is made.
   return (
     <>
       <div>
         <h2>{gameStatusGlobal.description}</h2>
       </div>
-
-      <h3>Actions you can take:</h3>
-
+      <h3>Time to decide - where to go?</h3>
       {actions.map((action) => (
         <div key={action.description} >
           <h4>{action.description}</h4>
-          <h5>MOVE</h5>
-          {/* This button will dispatch the second fetch thunk which will do the coming fetches with the next set of instructions
-          to show the user: for this fetch we need to send an object including the username, type="move" and the direction the user chose
-          so we send that data as a prop to the reducer*/}
-          <button type="button" onClick={() => dispatch(firstFetch(action.direction))}>{action.direction}</button>
+          <h5>Make your move!</h5>
+          <button type="button" onClick={() => dispatch(nextFetch(action.direction))}>{action.direction}</button>
         </div>
       ))}
-      {/*This button will allow the user to go back to their previous move, it calls the onHistoryBack function which dispatches
-      the historyGoBack action from our reducer. This button will only be enabled after the user has clicked past the first set
-      of instructions, so when the history array is longer than 1*/}
       <button type="button" onClick={onHistoryBack} disabled={historyArrray.length === 1}>GO BACK</button>
     </>
   );

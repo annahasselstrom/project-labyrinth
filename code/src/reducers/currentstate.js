@@ -11,18 +11,22 @@ export const currentstate = createSlice({
   name: 'currentstate',
   initialState,
   reducers: {
+    // A reducer that takes the payload - the entire response object from the Api,
+    // and stores it in Redux store.
     setGameStatus: (state, action) => {
-      // received as payload the object we got as response, containing all data: coordinates, description and actions
+      // The payload (the API object) is stored in the variable currentGameState
       const currentGameState = action.payload;
+      // the history property stores all the user moves. The spread operator includes all previous moves.
+      // state.gameStatus stores the current move
       state.history = [...state.history, state.gameStatus];
+      // Stores current move/position in game
       state.gameStatus = currentGameState;
     },
+    // A reducer that takes the user back to previous moves. It is initialzed as an empty array and
+    // it will be populated with the user moves.
+    // The reducer takes the currentGameState (where in game user is) and set that to the last move in the history array.
+    // It also removes, using slice(), the last move in the array, since that move becomes the current move when back-tracking.
     historyGoBack: (state, action) => {
-      // this reducer allows the user to go back to their previous move. We have an empty history array property in our
-      // initial state which will be the one that stores the different moves the user takes. The first thing this reducer
-      // does it to set the current gameStatus to the latest item in the history array (which will be the user's previous
-      // move), and then it also removes the last item in the history array since that one should no longer be part of the
-      // recorded moves.
       if (state.history.length > 0) {
         state.gameStatus = state.history[state.history.length -1];
         state.history = state.history.slice(0, state.history.length -1);
@@ -30,19 +34,19 @@ export const currentstate = createSlice({
     }
   }
 });
-
+// The initial POST request getting the welcome message and first move.
+// The API body needs a username: "username" in order to keep track of where in the game,
+// the user is. The thunk is needed to handle the asynchroneisity. It is a function that 
+// returns a function.
+// The payload of the dispatch is the value we pass into the slice 'currentstate' and reducer 
+// 'setGameStatus'. In this case the whole json object we get as a respones.
+// The initialState is no longer empty.
 export const firstFetch = () => {
-  // function that will do the initial POST request with object including username, so we can
-  // get initial set of instructions back in the response
-  // this set of instructions comes in an object form, so we now assign this object we got in the
-  // response as the new gameStatus on our global state. So now instead of having an empty gameStatus
-  // we'll have a gameStatus with object with instructions
-  // This thunk also toggles the loading state so it shows a loading message while the fetch is being done
   return (dispatch) => {
     fetch('https://wk16-backend.herokuapp.com/start', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: "bä" }),
+      body: JSON.stringify({ username: "bi" }),
     })
       .then(response => response.json())
       .then(json => {
@@ -51,16 +55,15 @@ export const firstFetch = () => {
   }
 };
 
+// The second API endpoint is, after the first is done, now used everytime the user makes a move. 
+// User moves are passed in, in the body of the fetch to let the Api know what respons to send back.
+// The dispatch then updates the currentstate with the returning json respons.
 export const nextFetch = (direction) => {
-  // function that does the secondary fetches to get the coming instruction for the user until it reaches
-  // an end. We send a POST request with an object containing the username; type="move" and the direction the
-  // user chose (we got that data sent in as props). Then the json object we got as response with all 
-  // instructions is set as the new gamestate using the setGameStatus reducer
   return (dispatch) => {
     fetch('https://wk16-backend.herokuapp.com/action', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: "bä", type: "move", direction: direction }),
+      body: JSON.stringify({ username: "bi", type: "move", direction: direction }),
     })
       .then(response => response.json())
       .then(json => {

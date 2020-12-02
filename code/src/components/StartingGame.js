@@ -1,31 +1,32 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { firstFetch, currentstate } from 'reducers/currentstate';
+import { firstFetch } from 'reducers/currentstate';
 
 import { PlayingGame } from './PlayingGame';
 
-// This component has a welcome message to greet the new user and also includes a button to
-// start the game. This button will do our initial fetch to fetch the first game instructions from
-// the backend
+// This component is responsible for dispatching the first POST request that will populate
+// the initialState with the API object. A welcoming message and button to start game.
+// The compononent calls the PlayingGame component only if the initialState has been populated.
+// That is, only after the first response is back.
 export const StartingGame = () => {
   const gameStatusGlobal = useSelector((state) => state.currentstate.gameStatus.coordinates);
 
   const dispatch = useDispatch();
 
-  // Once our gameStatus is populated with an object with properties, we can then render the InGamePage
-  // which will now show on the browser the first instruction for the user to choose from
   if (gameStatusGlobal) {
     return <PlayingGame />
   };
-
+  
+  // The dispatch payload is the firstFetch action handled by the reducer with the same name. After
+  // that and after initialState is populated with the response, the PlayingGame is rendered.
   return (
     <>
-      <h1>{`Welcome! to this Technigo Game!`}</h1>
+      <h1>{"Welcome! Let's play!"}</h1>
       {/* This start game button should trigger the first fetch thunk to fetch the first set of instructions
       received from the response when doing the first POST request, we send in the current username as prop
       so we can send that data on our POST request*/}
-      <button type="button" onClick={() => dispatch(firstFetch())}>Start Game</button>
+      <button type="button" onClick={() => dispatch(firstFetch())}>Play Game</button>
       {gameStatusGlobal}
     </>
   );
