@@ -65,7 +65,7 @@ box-shadow: 0px 1px 2px 1px black;
 border-radius: 6px;
 max-width: 300px;
 text-align: center;
-margin-top: 30px;
+margin-top: 20px;
 color: white;
 padding:20px;
 background: rgba(8, 8, 8, 0.565);
@@ -100,12 +100,15 @@ background: -webkit-linear-gradient(#eee, white);
 const ActionText = styled.h4` 
 font-size: 20px;
 margin-top:30px;
-color: white;
+text-shadow: 2px 2px 4px #000000;
+background: -webkit-linear-gradient(#eee, #6e985b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `
 
 const Button = styled.a`
 margin-top 50px;
-margin-bottom: 30px;
+margin-bottom: 40px;
 border-radius: 6px;
 font-size: 30px;
 text-align: center;
