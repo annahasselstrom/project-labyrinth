@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-  username: '',
+  username: "username",
   gameStatus: {},
   history: []
 };
 
-export const gamestate = createSlice({
-  name: 'gamestate',
+export const currentstate = createSlice({
+  name: 'currentstate',
   initialState,
   reducers: {
     setGameStatus: (state, action) => {
@@ -31,7 +31,7 @@ export const gamestate = createSlice({
   }
 });
 
-export const fetchInitialInstructions = () => {
+export const firstFetch = () => {
   // function that will do the initial POST request with object including username, so we can
   // get initial set of instructions back in the response
   // this set of instructions comes in an object form, so we now assign this object we got in the
@@ -42,16 +42,16 @@ export const fetchInitialInstructions = () => {
     fetch('https://wk16-backend.herokuapp.com/start', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: "username" }),
+      body: JSON.stringify({ username: "bä" }),
     })
       .then(response => response.json())
       .then(json => {
-        dispatch(gamestate.actions.setGameStatus(json));
+        dispatch(currentstate.actions.setGameStatus(json));
       })
   }
 };
 
-export const fetchSecondaryInstructions = (direction) => {
+export const nextFetch = (direction) => {
   // function that does the secondary fetches to get the coming instruction for the user until it reaches
   // an end. We send a POST request with an object containing the username; type="move" and the direction the
   // user chose (we got that data sent in as props). Then the json object we got as response with all 
@@ -60,11 +60,11 @@ export const fetchSecondaryInstructions = (direction) => {
     fetch('https://wk16-backend.herokuapp.com/action', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: "username", type: "move", direction: direction }),
+      body: JSON.stringify({ username: "bä", type: "move", direction: direction }),
     })
       .then(response => response.json())
       .then(json => {
-        dispatch(gamestate.actions.setGameStatus(json));
+        dispatch(currentstate.actions.setGameStatus(json));
       })
   }
 };
