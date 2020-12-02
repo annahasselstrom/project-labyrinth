@@ -66,7 +66,7 @@ export const firstFetch = (usernameGlobal) => {
 // User moves are passed in, in the body of the fetch to let the Api know what respons to send back.
 // The dispatch then updates the currentstate with the returning json respons.
 export const nextFetch = (direction, usernameGlobal) => {
-  return (dispatch, getStore) => {
+  return (dispatch) => {
     fetch('https://wk16-backend.herokuapp.com/action', {
       method: "POST",
       headers: { "Content-Type": "application/json" },

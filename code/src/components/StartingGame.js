@@ -13,6 +13,7 @@ import { PlayingGame } from './PlayingGame';
 export const StartingGame = () => {
   const gameStatusGlobal = useSelector((state) => state.currentstate.gameStatus.coordinates);
   const usernameGlobal = useSelector((state ) => state.currentstate.username);
+  
   // The input value is stored locally. This is only used before button to update
   // username is pressed. Then the value is stored in Redux global store.
   const [inputValue, setInputValue] = useState('');
