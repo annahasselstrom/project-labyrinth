@@ -11,6 +11,7 @@ export const PlayingGame = () => {
   const actions = useSelector((state) => state.currentstate.gameStatus.actions);
   const gameStatusGlobal = useSelector((state) => state.currentstate.gameStatus);
   const historyArrray = useSelector((state) => state.currentstate.history);
+  const usernameGlobal = useSelector((state ) => state.currentstate.username);
 
   const dispatch = useDispatch();
 
@@ -36,7 +37,7 @@ export const PlayingGame = () => {
         <div key={action.description} >
           <h4>{action.description}</h4>
           <h5>Make your move!</h5>
-          <button type="button" onClick={() => dispatch(nextFetch(action.direction))}>{action.direction}</button>
+          <button type="button" onClick={() => dispatch(nextFetch(action.direction, usernameGlobal))}>{action.direction}</button>
         </div>
       ))}
       <button type="button" onClick={onHistoryBack} disabled={historyArrray.length === 1}>GO BACK</button>

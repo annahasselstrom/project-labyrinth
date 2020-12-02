@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-  username: "username",
+  username: "",
   gameStatus: {},
   history: []
 };
@@ -22,11 +22,18 @@ export const currentstate = createSlice({
       // Stores current move/position in game
       state.gameStatus = currentGameState;
     },
+
+    // Updates the username property in the state. The new value comes from payload.
+    // Payload comes from the input value from StartingPage.
+    updateUsername: (state, action) => {
+      state.username = action.payload;
+    },
+
     // A reducer that takes the user back to previous moves. It is initialzed as an empty array and
     // it will be populated with the user moves.
     // The reducer takes the currentGameState (where in game user is) and set that to the last move in the history array.
     // It also removes, using slice(), the last move in the array, since that move becomes the current move when back-tracking.
-    historyGoBack: (state, action) => {
+    historyGoBack: state => {
       if (state.history.length > 0) {
         state.gameStatus = state.history[state.history.length -1];
         state.history = state.history.slice(0, state.history.length -1);
@@ -41,12 +48,12 @@ export const currentstate = createSlice({
 // The payload of the dispatch is the value we pass into the slice 'currentstate' and reducer 
 // 'setGameStatus'. In this case the whole json object we get as a respones.
 // The initialState is no longer empty.
-export const firstFetch = () => {
+export const firstFetch = (usernameGlobal) => {
   return (dispatch) => {
     fetch('https://wk16-backend.herokuapp.com/start', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: "bi" }),
+      body: JSON.stringify({ username: usernameGlobal }),
     })
       .then(response => response.json())
       .then(json => {
@@ -58,12 +65,12 @@ export const firstFetch = () => {
 // The second API endpoint is, after the first is done, now used everytime the user makes a move. 
 // User moves are passed in, in the body of the fetch to let the Api know what respons to send back.
 // The dispatch then updates the currentstate with the returning json respons.
-export const nextFetch = (direction) => {
-  return (dispatch) => {
+export const nextFetch = (direction, usernameGlobal) => {
+  return (dispatch, getStore) => {
     fetch('https://wk16-backend.herokuapp.com/action', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: "bi", type: "move", direction: direction }),
+      body: JSON.stringify({ username: usernameGlobal, type: "move", direction: direction }),
     })
       .then(response => response.json())
       .then(json => {
