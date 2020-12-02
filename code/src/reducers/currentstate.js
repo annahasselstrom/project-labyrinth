@@ -42,7 +42,7 @@ export const firstFetch = () => {
     fetch('https://wk16-backend.herokuapp.com/start', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: "bä" }),
+      body: JSON.stringify({ username: "Hej" }),
     })
       .then(response => response.json())
       .then(json => {
@@ -60,7 +60,7 @@ export const nextFetch = (direction) => {
     fetch('https://wk16-backend.herokuapp.com/action', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: "bä", type: "move", direction: direction }),
+      body: JSON.stringify({ username: "Hej", type: "move", direction: direction }),
     })
       .then(response => response.json())
       .then(json => {
