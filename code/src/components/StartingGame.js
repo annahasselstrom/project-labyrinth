@@ -1,75 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { firstFetch, currentstate } from 'reducers/currentstate';
 import styled from 'styled-components';
   
 import { PlayingGame } from './PlayingGame';
-//import { StylingStartingGame } from './StylingStartingGame';
-
-// This component is responsible for dispatching the first POST request that will populate
-// the initialState with the API object. A welcoming message and button to start game.
-// The compononent calls the PlayingGame component only if the initialState has been populated.
-// That is, only after the first response is back.
-export const StartingGame = () => {
-  const gameCoordinates = useSelector((state) => state.currentstate.gameStatus.coordinates);
- //const usernameGlobal = useSelector((state ) => state.currentstate.username);
-  
-  // The input value is stored locally. This is only used before button to update
-  // username is pressed. Then the value is stored in Redux global store.
-  const [inputValue, setInputValue] = useState('');
-  const username = useSelector(store => store.currentstate.username)
-  const dispatch = useDispatch();
-
-  //useEffect - let's us control when the fetch is done. Here perform fetch only after 
-  //the Redux store is updated with the new username (the new value from valueInput)
-  useEffect(() => {
-   firstFetch()
-  }, [username]);
-
-  if (gameCoordinates) {
-    return <PlayingGame />
-  };
-
-  // Stores and updates username locally.
-  const updateUsername = () => {
-    console.log(inputValue)
-    dispatch(currentstate.actions.updateUsername(inputValue))
-  }
- 
-  // The dispatch payload is the firstFetch action handled by the reducer with the same name. After
-  // that and after initialState is populated with the response, the PlayingGame is rendered.
-  return (
-      <Container>
-        <Title>{`Welcome to this mysterious Game`}</Title>
-        <InputContainer>
-        <Input
-          placeholder='Your player name'
-          type='text'
-          style={{
-            backgroundColor: "black",
-            height: "30px",
-            border: "none",
-            borderRadius: "10px",
-            paddingLeft: "8px",
-            paddingTop: "6px",
-            paddingBottom: "6px",
-            fontSize: "15px",
-            color: "#6e985b"
-          }}
-          value={inputValue}
-          onChange={event => setInputValue(event.target.value)}
-        />
-          <InputButton>
-            <Button onClick={updateUsername}>Save</Button>
-          </InputButton>
-        </InputContainer>
-        <ButtonContainer>
-          <Button type="button" onClick={() => dispatch(firstFetch(username))}>Play Game</Button>
-        </ButtonContainer>
-      </Container>
-  );
-};
 
 const Container = styled.div`
   box-shadow: 0px 1px 2px 1px black;
@@ -100,11 +35,12 @@ const InputContainer = styled.div`
   display:flex;
   justify-content: center;
 `
+const InputDiv = styled.div`
+  box-shadow: 0px 0px 5px 0px yellowgreen;
+  border-radius: 6px;
+`
 const InputButton = styled.div`
   margin-left: 20px;
-`
-const Input = styled.input`
-  background-color: transparant;
 `
 const ButtonContainer = styled.div`
   margin-top: 40px;
@@ -121,8 +57,79 @@ const Button = styled.a`
   background: -webkit-linear-gradient(#eee, white);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;}
+  :hover {
+      text-shadow: 2px 2px 4px #000000;
+    background: -webkit-linear-gradient(black, red);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    }
+    :active {
+      background-color: #3e8e41;
+      box-shadow: 0px 5px 5px 0px darkred;
+      transform: translateY(4px);
+    }
   text-shadow: 2px 2px 4px #000000;
     @media (min-width: 768px) {
       font-size: 32px;
 }
 `
+// This component is responsible for dispatching the first POST request that will populate
+// the initialState with the API object. A welcoming message and button to start game.
+// The compononent calls the PlayingGame component only if the initialState has been populated.
+// That is, only after the first response is back.
+export const StartingGame = () => {
+  const gameCoordinates = useSelector((state) => state.currentstate.gameStatus.coordinates);
+ //const usernameGlobal = useSelector((state ) => state.currentstate.username);
+  
+  // The input value is stored locally. This is only used before button to update
+  // username is pressed. Then the value is stored in Redux global store.
+  const [inputValue, setInputValue] = useState('');
+  const username = useSelector(store => store.currentstate.username)
+  const dispatch = useDispatch();
+
+  if (gameCoordinates) {
+    return <PlayingGame />
+  };
+
+  // Stores and updates username locally before global state is updated.
+  const updateUsername = () => {
+    console.log(inputValue)
+    dispatch(currentstate.actions.updateUsername(inputValue))
+  }
+ 
+  // The dispatch payload is the firstFetch action handled by the reducer with the same name. After
+  // that and after initialState is populated with the response, the PlayingGame is rendered.
+  return (
+      <Container>
+        <Title>{`Welcome to this mysterious Game`}</Title>
+        <InputContainer>
+        <InputDiv>
+          <input
+            placeholder='Your player name'
+            type='text'
+            style={{
+              backgroundColor: "black",
+              height: "30px",
+              border: "none",
+              borderRadius: "10px",
+              paddingLeft: "8px",
+              paddingTop: "6px",
+              paddingBottom: "6px",
+              fontSize: "15px",
+              color: "red"
+            }}
+            value={inputValue}
+            onChange={event => setInputValue(event.target.value)}
+          />
+          </InputDiv>
+          <InputButton>
+            <Button onClick={updateUsername}>Save</Button>
+          </InputButton>
+        </InputContainer>
+        <ButtonContainer>
+          <Button type="button" onClick={() => dispatch(firstFetch(username))}>Play Game</Button>
+        </ButtonContainer>
+      </Container>
+  );
+};
+

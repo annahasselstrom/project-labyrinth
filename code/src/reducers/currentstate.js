@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ui } from './ui';
 
 const initialState = {
   username: "",
@@ -49,6 +50,7 @@ export const currentstate = createSlice({
 // The initialState is no longer empty.
 export const firstFetch = (username) => {
   return (dispatch) => {
+    dispatch(ui.actions.setLoading(true))
     fetch('https://wk16-backend.herokuapp.com/start', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -57,6 +59,7 @@ export const firstFetch = (username) => {
       .then(response => response.json())
       .then(json => {
         dispatch(currentstate.actions.setGameStatus(json));
+        dispatch(ui.actions.setLoading(false))
       })
   }
 };
@@ -66,6 +69,7 @@ export const firstFetch = (username) => {
 // The dispatch then updates the currentstate with the returning json respons.
 export const nextFetch = (direction, username) => {
   return (dispatch) => {
+    dispatch(ui.actions.setLoading(true))
     fetch('https://wk16-backend.herokuapp.com/action', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -74,6 +78,7 @@ export const nextFetch = (direction, username) => {
       .then(response => response.json())
       .then(json => {
         dispatch(currentstate.actions.setGameStatus(json));
+        dispatch(ui.actions.setLoading(false))
       })
   }
 };
