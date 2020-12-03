@@ -1,35 +1,74 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
-
-import { firstFetch } from '../reducers/currentstate';
+import { firstFetch, currentstate } from 'reducers/currentstate';
 
 import { PlayingGame } from './PlayingGame';
 
-// This component has a welcome message to greet the new user and also includes a button to
-// start the game. This button will do our initial fetch to fetch the first game instructions from
-// the backend
+// This component is responsible for dispatching the first POST request that will populate
+// the initialState with the API object. A welcoming message and button to start game.
+// The compononent calls the PlayingGame component only if the initialState has been populated.
+// That is, only after the first response is back.
 export const StartingGame = () => {
-  const gameStatusGlobal = useSelector((state) => state.currentstate.gameStatus.coordinates);
+  const gameCoordinates = useSelector((state) => state.currentstate.gameStatus.coordinates);
+  //const usernameGlobal = useSelector((state ) => state.currentstate.username);
 
+  // The input value is stored locally. This is only used before button to update
+  // username is pressed. Then the value is stored in Redux global store.
+  const [inputValue, setInputValue] = useState('');
+  const username = useSelector(store => store.currentstate.username)
   const dispatch = useDispatch();
 
-  // Once our gameStatus is populated with an object with properties, we can then render the InGamePage
-  // which will now show on the browser the first instruction for the user to choose from
-  if (gameStatusGlobal) {
+  //useEffect - let's us control when the fetch is done. Here perform fetch only after 
+  //the Redux store is updated with the new username (the new value from valueInput)
+  useEffect(() => {
+    firstFetch()
+  }, [username]);
+
+  if (gameCoordinates) {
     return <PlayingGame />
   };
 
+  // Stores and updates username locally.
+  const updateUsername = () => {
+    console.log(inputValue)
+    dispatch(currentstate.actions.updateUsername(inputValue))
+  }
+
+  // The dispatch payload is the firstFetch action handled by the reducer with the same name. After
+  // that and after initialState is populated with the response, the PlayingGame is rendered.
+
   return (
     <>
-    <Container>
-      <Title>{`Welcome to this mysterious Game`}</Title>
-      <h3>Please enter your name:____________</h3>
-      {/* This start game button should trigger the first fetch thunk to fetch the first set of instructions
-      received from the response when doing the first POST request, we send in the current username as prop
-      so we can send that data on our POST request*/}
-      <Button type="button" onClick={() => dispatch(firstFetch())}>Start Game</Button>
-      {gameStatusGlobal}
+      <Container>
+        <Title>{`Welcome to this mysterious Game`}</Title>
+        <InputContainer>
+        <Inputer>
+        <Input
+          placeholder='Your player name'
+          type='text'
+          style={{
+            backgroundColor: "black",
+            height: "30px",
+            border: "none",
+            borderRadius: "10px",
+            paddingLeft: "8px",
+            paddingTop: "6px",
+            paddingBottom: "6px",
+            fontSize: "15px",
+            color: "#6e985b"
+          }}
+          value={inputValue}
+          onChange={event => setInputValue(event.target.value)}
+        />
+        </Inputer>
+        <InputButton>
+        <Button onClick={updateUsername}>Save</Button>
+        </InputButton>
+        </InputContainer>
+        <ButtonContainer>
+        <Button type="button" onClick={() => dispatch(firstFetch(username))}>Play Game</Button>
+        </ButtonContainer>
       </Container>
     </>
   );
@@ -47,6 +86,9 @@ const Container = styled.div`
   margin-bottom:200px;
   color: white;
   background: rgba(8, 8, 8, 0.565);
+  @media (min-width: 768px) {
+    max-width: 500px;
+  }
 `
 const Title = styled.h1`
 font-size: 40px;
@@ -54,11 +96,31 @@ text-shadow: 2px 2px 4px #000000;
 background: -webkit-linear-gradient(#eee, white);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  @media (min-width: 768px) {
+    font-size: 60px;
+  }
+`
+const InputContainer = styled.div`
+display:flex;
+justify-content: center;
 
+`
+const Inputer = styled.div`
+
+`
+
+const InputButton = styled.div`
+margin-left: 20px;
+`
+const Input = styled.input`
+background-color: transparant;
+`
+const ButtonContainer = styled.div`
+margin-top: 40px;
 `
 const Button = styled.a`
 border-radius: 6px;
-font-size: 30px;
+font-size: 28px;
 text-align: center;
 border-bottom: black solid 1px;
 max-width: 150px;
@@ -69,5 +131,7 @@ background: -webkit-linear-gradient(#eee, white);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;}
 text-shadow: 2px 2px 4px #000000;
-
+@media (min-width: 768px) {
+  font-size: 32px;
+}
 `
