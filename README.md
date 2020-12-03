@@ -1,7 +1,7 @@
 # Project Labyrinth
 This is a pair-programming project together with Nathalie Nordström. We have built a game which allows a user to navigate a maze, in the form of a text-based adventure, provided by a backend.
 
-We have used a specified API to build a frontend which gives the user control over what to do next. Our focus was to use thunks and redux to build the communication with the backend.  
+We have used a specified API to build a frontend which gives the user control over what to do next. Our focus was to use thunks and redux to build the communication with the backend. Redux was used to store and manage state of game.
 
 ## View it live 👀
 
