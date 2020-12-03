@@ -1,15 +1,14 @@
 # Project Labyrinth
 This is a pair-programming project together with Nathalie Nordström. We have built a game which allows a user to navigate a maze, in the form of a text-based adventure, provided by a backend.
 
-We have used a specified API to build a frontend which gives the user control over what to do next. Our focus was to use thunks and redux to build the communication with the backend. Redux was used to store and manage state of game.
-
+We have used a specified API to build a frontend which gives the user control over what to do next. Our focus was to use thunks and redux to build the communication with the backend. 
 ## View it live 👀
 
 https://unruffled-elion-e19f6e.netlify.app/ 
 
 ## The project
 
-In this project we worked with an API with two endpoints: one url started the game and this one we only asked for once, using a POST request. The second endpoint handled the actions the user chose to perform. The response depended on the action made. We performed POST requests using this url every time the user made an action. 
+In this project we worked with an API with two endpoints: one url started the game and this one we only asked for once, using a POST request. The second endpoint handled the actions the user chose to perform. The response depended on the action made. We performed POST requests using this url every time the user made an action. Redux was used to store and manage state of game.
 
 ## Workflow
 
