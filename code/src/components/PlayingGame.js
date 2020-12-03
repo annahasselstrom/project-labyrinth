@@ -126,7 +126,7 @@ export const PlayingGame = () => {
           <HeaderText>{gameStatus.description}</HeaderText>
       </HeaderContainer>
       <ActionContainer>
-        <ActionTitle>{username} - Where to go?</ActionTitle>
+        <ActionTitle>{username} - where to go?</ActionTitle>
         {actions.map((action) => (
           <div key={action.description} >
             <ActionText>{action.description}</ActionText>
