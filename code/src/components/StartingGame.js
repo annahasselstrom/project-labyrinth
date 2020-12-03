@@ -131,6 +131,17 @@ background: -webkit-linear-gradient(#eee, white);
 -webkit-background-clip: text;
 -webkit-text-fill-color: transparent;}
 text-shadow: 2px 2px 4px #000000;
+:hover {
+  text-shadow: 2px 2px 4px #000000;
+background: -webkit-linear-gradient(black, red);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+:active {
+  background-color: #3e8e41;
+  box-shadow: 0px 5px 5px 0px darkred;
+  transform: translateY(4px);
+}
 @media (min-width: 768px) {
   font-size: 32px;
 }
