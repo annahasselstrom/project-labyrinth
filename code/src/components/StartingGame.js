@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { firstFetch, currentstate } from 'reducers/currentstate';
+import styled from 'styled-components';
   
 import { PlayingGame } from './PlayingGame';
+//import { StylingStartingGame } from './StylingStartingGame';
 
 // This component is responsible for dispatching the first POST request that will populate
 // the initialState with the API object. A welcoming message and button to start game.
@@ -38,19 +40,89 @@ export const StartingGame = () => {
   // The dispatch payload is the firstFetch action handled by the reducer with the same name. After
   // that and after initialState is populated with the response, the PlayingGame is rendered.
   return (
-    <div className='start-page-container'>
-      <h1>{"Welcome! Let's play!"}</h1>
-        <input
+      <Container>
+        <Title>{`Welcome to this mysterious Game`}</Title>
+        <InputContainer>
+        <Input
           placeholder='Your player name'
           type='text'
+          style={{
+            backgroundColor: "black",
+            height: "30px",
+            border: "none",
+            borderRadius: "10px",
+            paddingLeft: "8px",
+            paddingTop: "6px",
+            paddingBottom: "6px",
+            fontSize: "15px",
+            color: "#6e985b"
+          }}
           value={inputValue}
           onChange={event => setInputValue(event.target.value)}
         />
-        <button className='username-input'
-          onClick={updateUsername}>
-          Log in
-        </button>
-      <button type="button" onClick={() => dispatch(firstFetch(username))}>Play Game</button>
-    </div>
+          <InputButton>
+            <Button onClick={updateUsername}>Save</Button>
+          </InputButton>
+        </InputContainer>
+        <ButtonContainer>
+          <Button type="button" onClick={() => dispatch(firstFetch(username))}>Play Game</Button>
+        </ButtonContainer>
+      </Container>
   );
 };
+
+const Container = styled.div`
+  box-shadow: 0px 1px 2px 1px black;
+  border-radius: 6px;
+  max-width: 300px;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 40px;
+  margin-top: 200px;
+  margin-bottom:200px;
+  color: white;
+  background: rgba(8, 8, 8, 0.565);
+  @media (min-width: 768px) {
+    max-width: 500px;
+  }
+`
+const Title = styled.h1`
+font-size: 40px;
+text-shadow: 2px 2px 4px #000000;
+background: -webkit-linear-gradient(#eee, white);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  @media (min-width: 768px) {
+    font-size: 60px;
+  }
+`
+const InputContainer = styled.div`
+  display:flex;
+  justify-content: center;
+`
+const InputButton = styled.div`
+  margin-left: 20px;
+`
+const Input = styled.input`
+  background-color: transparant;
+`
+const ButtonContainer = styled.div`
+  margin-top: 40px;
+`
+const Button = styled.a`
+  border-radius: 6px;
+  font-size: 28px;
+  text-align: center;
+  border-bottom: black solid 1px;
+  max-width: 150px;
+  box-shadow: 0px 5px 5px 0px black;
+  padding: 5px;
+  cursor: pointer;
+  background: -webkit-linear-gradient(#eee, white);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;}
+  text-shadow: 2px 2px 4px #000000;
+    @media (min-width: 768px) {
+      font-size: 32px;
+}
+`
