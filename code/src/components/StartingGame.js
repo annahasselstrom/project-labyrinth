@@ -43,31 +43,31 @@ export const StartingGame = () => {
       <Container>
         <Title>{`Welcome to this mysterious Game`}</Title>
         <InputContainer>
-        <Inputer>
-        <Input
-          placeholder='Your player name'
-          type='text'
-          style={{
-            backgroundColor: "black",
-            height: "30px",
-            border: "none",
-            borderRadius: "10px",
-            paddingLeft: "8px",
-            paddingTop: "6px",
-            paddingBottom: "6px",
-            fontSize: "15px",
-            color: "#6e985b"
-          }}
-          value={inputValue}
-          onChange={event => setInputValue(event.target.value)}
-        />
-        </Inputer>
-        <InputButton>
-        <Button onClick={updateUsername}>Save</Button>
-        </InputButton>
+          <Inputer>
+            <Input
+              placeholder='Your player name'
+              type='text'
+              style={{
+                backgroundColor: "black",
+                height: "30px",
+                border: "none",
+                borderRadius: "10px",
+                paddingLeft: "8px",
+                paddingTop: "6px",
+                paddingBottom: "6px",
+                fontSize: "15px",
+                color: "#6e985b"
+              }}
+              value={inputValue}
+              onChange={event => setInputValue(event.target.value)}
+            />
+          </Inputer>
+          <InputButton>
+            <Button onClick={updateUsername}>Save</Button>
+          </InputButton>
         </InputContainer>
         <ButtonContainer>
-        <Button type="button" onClick={() => dispatch(firstFetch(username))}>Play Game</Button>
+          <Button type="button" onClick={() => dispatch(firstFetch(username))}>Play Game</Button>
         </ButtonContainer>
       </Container>
     </>
