@@ -1,8 +1,11 @@
 # Project Labyrinth
+This is a pair-programming project together with Nathalie Nordström. We have build a game which allows a user to navigate a maze, in the form of a text-based adventure, provided by a backend.
 
-Replace this readme with your own information about your project.
+We have used a specified API to build a frontend which gives the user control over what to do next. Our focus was to use thunks and redux to build the communication with the backend.  
 
-Start by briefly describing the assignment in a sentence or two. Keep it short and to the point.
+## View it live 👀
+
+https://unruffled-elion-e19f6e.netlify.app/ 
 
 ## The problem
 
