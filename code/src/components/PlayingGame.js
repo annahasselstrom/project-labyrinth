@@ -43,7 +43,7 @@ export const PlayingGame = () => {
           </div>
         </HeaderContainer>
         <ActionContainer>
-          <ActionTitle>Actions you can take:</ActionTitle>
+          <ActionTitle>Actions {username} can take:</ActionTitle>
 
           {actions.map((action) => (
             <div key={action.description} >
@@ -98,8 +98,6 @@ const HeaderText = styled.h2`
 
     }
 `
-
-
 const ActionContainer = styled.div`
   box-shadow: 0px 1px 2px 1px black;
   border-radius: 6px;
@@ -120,7 +118,6 @@ const ActionTitle = styled.h4`
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 `
-
 const ActionText = styled.h4` 
   font-size: 20px;
   margin-top:30px;
@@ -132,7 +129,6 @@ const ActionText = styled.h4`
       font-size: 25px;
     }
 `
-
 const Button = styled.a`
   margin-top: 50px;
   margin-bottom: 40px;

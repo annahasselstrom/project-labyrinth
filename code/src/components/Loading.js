@@ -8,7 +8,6 @@ export const Loading = () => {
 
     return (
         <>
-
             {isLoading &&
                 <Container>
                     <DotWrapper>
@@ -19,7 +18,6 @@ export const Loading = () => {
                     </DotWrapper>
             </Container>
             }
-
         </>
     )
 }
@@ -42,8 +40,8 @@ const BounceAnimation = keyframes`
 `;
 
 const Dot = styled.div`
-
-  box-shadow: 2px 2px 4px #000000;
+  
+  box-shadow: 4px 4px 4px #000000;
   border-radius: 50%;
   width: 50px;
   height: 50px;

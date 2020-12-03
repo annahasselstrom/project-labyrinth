@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 import { firstFetch, currentstate } from 'reducers/currentstate';
@@ -19,12 +19,6 @@ export const StartingGame = () => {
   const username = useSelector(store => store.currentstate.username)
   const dispatch = useDispatch();
 
-  //useEffect - let's us control when the fetch is done. Here perform fetch only after 
-  //the Redux store is updated with the new username (the new value from valueInput)
-  useEffect(() => {
-    firstFetch()
-  }, [username]);
-
   if (gameCoordinates) {
     return <PlayingGame />
   };
@@ -44,7 +38,7 @@ export const StartingGame = () => {
         <Title>{`Welcome to this mysterious Game`}</Title>
         <InputContainer>
           <Inputer>
-            <Input
+            <input
               placeholder='Your player name'
               type='text'
               style={{
@@ -56,7 +50,7 @@ export const StartingGame = () => {
                 paddingTop: "6px",
                 paddingBottom: "6px",
                 fontSize: "15px",
-                color: "#6e985b"
+                color: "red"
               }}
               value={inputValue}
               onChange={event => setInputValue(event.target.value)}
@@ -91,58 +85,54 @@ const Container = styled.div`
   }
 `
 const Title = styled.h1`
-font-size: 40px;
-text-shadow: 2px 2px 4px #000000;
-background: -webkit-linear-gradient(#eee, white);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  @media (min-width: 768px) {
-    font-size: 60px;
-  }
+  font-size: 40px;
+  text-shadow: 2px 2px 4px #000000;
+  background: -webkit-linear-gradient(#eee, white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    @media (min-width: 768px) {
+      font-size: 60px;
+    }
 `
 const InputContainer = styled.div`
-display:flex;
-justify-content: center;
-
+  display:flex;
+  justify-content: center;
 `
 const Inputer = styled.div`
-
+  box-shadow: 0px 0px 5px 0px yellowgreen;
+  border-radius: 6px;
 `
-
 const InputButton = styled.div`
-margin-left: 20px;
-`
-const Input = styled.input`
-background-color: transparant;
+  margin-left: 20px;
 `
 const ButtonContainer = styled.div`
-margin-top: 40px;
+  margin-top: 40px;
 `
 const Button = styled.a`
-border-radius: 6px;
-font-size: 28px;
-text-align: center;
-border-bottom: black solid 1px;
-max-width: 150px;
-box-shadow: 0px 5px 5px 0px black;
-padding: 5px;
-cursor: pointer;
-background: -webkit-linear-gradient(#eee, white);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;}
-text-shadow: 2px 2px 4px #000000;
-:hover {
+  border-radius: 6px;
+  font-size: 28px;
+  text-align: center;
+  border-bottom: black solid 1px;
+  max-width: 150px;
+  box-shadow: 0px 5px 5px 0px black;
+  padding: 5px;
+  cursor: pointer;
+  background: -webkit-linear-gradient(#eee, white);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;}
   text-shadow: 2px 2px 4px #000000;
-background: -webkit-linear-gradient(black, red);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-}
-:active {
-  background-color: #3e8e41;
-  box-shadow: 0px 5px 5px 0px darkred;
-  transform: translateY(4px);
-}
-@media (min-width: 768px) {
-  font-size: 32px;
-}
+  :hover {
+    text-shadow: 2px 2px 4px #000000;
+  background: -webkit-linear-gradient(black, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  }
+  :active {
+    background-color: #3e8e41;
+    box-shadow: 0px 5px 5px 0px darkred;
+    transform: translateY(4px);
+  }
+  @media (min-width: 768px) {
+    font-size: 32px;
+  }
 `
