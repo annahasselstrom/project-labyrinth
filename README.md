@@ -15,10 +15,10 @@ In this project we worked with an API with two endpoints: one url started the ga
 
 - Tried to visualize the end result 
 - Investigated the api endpoints in Postman
-- Got the game started in our browser without any connection yet to the Redux store
+- Got the game started in our console without any connection yet to the Redux store
+- Created components responsible for starting the game and for playing the game
 - Created store and slice with reducers 
 - Connected the API responses to the Redux store using thunks with the fetches (by using thunks we can manage the asynchronousity and prevent a user from performing an new action before the first response is received from the server and updated in Redux store).
-- Created components responsible for starting the game and for playing the game
 - Displayed the actions and instructions from the responses
 - Updated the gamestate on each user action
 - Added styling using styled components
