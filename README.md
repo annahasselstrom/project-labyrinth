@@ -1,16 +1,18 @@
-# Project Labyrinth
+# Project Labyrinth ⊪
+
 This is a pair-programming project together with Nathalie Nordström. We have built a game which allows a user to navigate a maze, in the form of a text-based adventure, provided by a backend.
 
 We have used a specified API to build a frontend which gives the user control over what to do next. Our focus was to use thunks and redux to build the communication with the backend. 
+
 ## View it live 👀
 
 https://unruffled-elion-e19f6e.netlify.app/ 
 
-## The project
+## The project 🀗
 
 In this project we worked with an API with two endpoints: one url started the game and this one we only asked for once, using a POST request. The second endpoint handled the actions the user chose to perform. The response depended on the action made. We performed POST requests using this url every time the user made an action. Redux was used to store and manage state of game.
 
-## Workflow
+## Workflow 🛠
 
 - Tried to visualize the end result 
 - Investigated the api endpoints in Postman
@@ -22,7 +24,7 @@ In this project we worked with an API with two endpoints: one url started the ga
 - Updated the gamestate on each user action
 - Added styling using styled components
 
-## Features
+## Features 🚥
 
 - The page is responsive - we use media queries for this
 - Redux is used to store the current state of the game
@@ -31,12 +33,12 @@ In this project we worked with an API with two endpoints: one url started the ga
 - We use styled components to style our page
 - Redux store is also used to store the history of player action - displayed in a back-button
 
-## Learnings 
+## Learnings 🔑
 
 - How to make API calls around Redux using thunks
 - How to structure a redux store to suit the data available
 - To send JSON in the body of a request
 
-## Had we have had more time..
+## Had we have had more time.. 🤓
 
 We would have liked to make the buttons re-usable and also understand localStorage better and how to implement it. Perhaps also structure the styling in separate files.
