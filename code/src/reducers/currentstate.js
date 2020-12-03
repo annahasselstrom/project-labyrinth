@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 const initialState = {
   username: "",
   gameStatus: {},
@@ -48,12 +47,12 @@ export const currentstate = createSlice({
 // The payload of the dispatch is the value we pass into the slice 'currentstate' and reducer 
 // 'setGameStatus'. In this case the whole json object we get as a respones.
 // The initialState is no longer empty.
-export const firstFetch = (usernameGlobal) => {
+export const firstFetch = (username) => {
   return (dispatch) => {
     fetch('https://wk16-backend.herokuapp.com/start', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: usernameGlobal }),
+      body: JSON.stringify({ username: username }),
     })
       .then(response => response.json())
       .then(json => {
@@ -65,12 +64,12 @@ export const firstFetch = (usernameGlobal) => {
 // The second API endpoint is, after the first is done, now used everytime the user makes a move. 
 // User moves are passed in, in the body of the fetch to let the Api know what respons to send back.
 // The dispatch then updates the currentstate with the returning json respons.
-export const nextFetch = (direction, usernameGlobal) => {
+export const nextFetch = (direction, username) => {
   return (dispatch) => {
     fetch('https://wk16-backend.herokuapp.com/action', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: usernameGlobal, type: "move", direction: direction }),
+      body: JSON.stringify({ username: username, type: "move", direction: direction }),
     })
       .then(response => response.json())
       .then(json => {
