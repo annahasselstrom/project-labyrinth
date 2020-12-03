@@ -43,7 +43,7 @@ export const PlayingGame = () => {
           </div>
         </HeaderContainer>
         <ActionContainer>
-          <ActionTitle>Actions {username} can take:</ActionTitle>
+          <ActionTitle>{username} - Where to go?</ActionTitle>
 
           {actions.map((action) => (
             <div key={action.description} >
