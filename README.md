@@ -22,6 +22,7 @@ Created components responsible for starting the game and for playing the game
 Displayed the actions and instructions from the responses
 Updated the gamestate on each user action
 Added styling using styled components
+The enterd username will show on the playing page, as a unique greeting to the player 
 Features 🚥
 
 The page is responsive - we use media queries for this
