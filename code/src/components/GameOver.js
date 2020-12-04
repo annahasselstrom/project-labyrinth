@@ -46,7 +46,7 @@ const GameOverText = styled.h1`
         font-size: 32px;
     }
 `
-const StartOverButton = styled.button`
+const StartOverButton = styled.a`
     font-family: 'MedievalSharp', cursive;
     margin-top: 50px;
     margin-bottom: 40px;

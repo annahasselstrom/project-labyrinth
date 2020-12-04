@@ -21,7 +21,8 @@ export const PlayingGame = () => {
   const onHistoryBack = () => {
     dispatch(currentstate.actions.historyGoBack());
   };
-
+  // This if will show the GameOver page so the player can start over when 
+  //  the player have finished the game
   if (actions.length === 0) {
     return (
       <GameOver />
@@ -159,7 +160,7 @@ const Button = styled.a`
     }
 `
 
-const StartOverButton = styled.button`
+const StartOverButton = styled.a`
     margin-top: 50px;
     font-family: 'MedievalSharp', cursive;
     margin-bottom: 40px;

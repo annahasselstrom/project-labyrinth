@@ -74,8 +74,7 @@ const Container = styled.div`
   border-radius: 6px;
   max-width: 300px;
   text-align: center;
-  padding-top: 10px;
-  padding-bottom: 40px;
+  padding: 10px 10px 40px 10px;
   margin-top: 200px;
   margin-bottom:200px;
   color: white;
