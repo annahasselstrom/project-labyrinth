@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components'
 
 import { nextFetch, currentstate } from '../reducers/currentstate';
-
+import { GameOver } from '../components/GameOver'
 // This component is responsible for passing data to the Redux store (and the POST requests) 
 // in order to keep the store updated and have the player moving forward in the game.
 // For this the component needs access to: current gamestatus, actions, and history of the 
@@ -11,7 +11,6 @@ import { nextFetch, currentstate } from '../reducers/currentstate';
 export const PlayingGame = () => {
   const actions = useSelector((state) => state.currentstate.gameStatus.actions);
   const gameStatus = useSelector((state) => state.currentstate.gameStatus);
-  const historyArrray = useSelector((state) => state.currentstate.history);
   const username = useSelector((state) => state.currentstate.username);
 
   const dispatch = useDispatch();
@@ -23,6 +22,11 @@ export const PlayingGame = () => {
     dispatch(currentstate.actions.historyGoBack());
   };
 
+  if (actions.length === 0) {
+    return (
+      <GameOver />
+    );
+  };
   // The component is also responsible for mapping over and outputting different properties
   // from the Api object, and by sending another nextFetch on every onclick by player. The onclick 
   // stores the value of the direction chosen by the player, for the Api to know what next 
@@ -34,17 +38,17 @@ export const PlayingGame = () => {
   return (
     <>
       <Container>
+          {/*This button will allow the user to go back to their previous move, it calls the onHistoryBack function which dispatches
+      the historyGoBack action from our reducer. This button will only be enabled after the user has clicked past the first set
+      of instructions, so when the history array is longer than 1*/}
         <Button type="button" onClick={onHistoryBack}> GO BACK </Button>
-
         <HeaderContainer>
-
           <div>
             <HeaderText>{gameStatus.description}</HeaderText>
           </div>
         </HeaderContainer>
         <ActionContainer>
           <ActionTitle>{username} - Where to go?</ActionTitle>
-
           {actions.map((action) => (
             <div key={action.description} >
               <ActionText>{action.description}</ActionText>
@@ -53,17 +57,12 @@ export const PlayingGame = () => {
           so we send that data as a prop to the reducer*/}
 
               <Button type="button" onClick={() => dispatch(nextFetch(action.direction, username))}>{action.direction}</Button>
-
             </div>
           ))}
-
         </ActionContainer>
-        {/*This button will allow the user to go back to their previous move, it calls the onHistoryBack function which dispatches
-      the historyGoBack action from our reducer. This button will only be enabled after the user has clicked past the first set
-      of instructions, so when the history array is longer than 1*/}
-
-        <Button type="button" onClick={onHistoryBack} disabled={historyArrray.length === 1}> GO BACK </Button>
-
+      
+  {/*This button will allow the user to go back to the starting page */}
+        <StartOverButton buttonwidth onClick={() => window.location.reload()}>Start Over</StartOverButton>
       </Container>
     </>
   );
@@ -158,4 +157,36 @@ const Button = styled.a`
     @media (min-width: 768px) {
       font-size: 32px;
     }
+`
+
+const StartOverButton = styled.button`
+    margin-top: 50px;
+    font-family: 'MedievalSharp', cursive;
+    margin-bottom: 40px;
+    border-radius: 6px;
+    font-size: 20px;
+    text-align: center;
+    border-bottom: black solid 1px;
+    max-width: 150px;
+    cursor: pointer;
+    box-shadow: 0px 5px 5px 0px black;
+    padding: 0 10px 0 10px;
+    text-shadow: 2px 2px 4px #000000;
+    background: -webkit-linear-gradient(#eee, white);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        :hover {
+        text-shadow: 2px 2px 4px #000000;
+        background: -webkit-linear-gradient(black, red);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        }
+        :active {
+        background-color: #3e8e41;
+        box-shadow: 0px 5px 5px 0px darkred;
+        transform: translateY(4px);
+        }
+        @media (min-width: 768px) {
+        font-size: 32px;
+        }
 `
