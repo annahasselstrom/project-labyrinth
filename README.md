@@ -23,6 +23,7 @@ Displayed the actions and instructions from the responses
 Updated the gamestate on each user action
 Added styling using styled components
 The enterd username will show on the playing page, as a unique greeting to the player 
+We have a ending page that vill show the last description of the game and a button to start over. 
 Features 🚥
 
 The page is responsive - we use media queries for this
